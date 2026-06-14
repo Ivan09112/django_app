@@ -4,6 +4,7 @@ __pycache__/
 *.pyc
 db.sqlite3
 .DS_Store
+.gitignore
 
 # Игнорировать папки, указанные пользователем
 .agents/
