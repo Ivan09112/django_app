@@ -3,8 +3,8 @@ from django.contrib.auth.models import User
 
 class Category(models.Model):
     TYPE_CHOICES = [
-        ('INCOME', 'Income'),
-        ('EXPENSE', 'Expense'),
+        ('INCOME', 'Доход'),
+        ('EXPENSE', 'Расход'),
     ]
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, related_name='categories')
     name = models.CharField(max_length=50)
@@ -21,8 +21,8 @@ class Category(models.Model):
 
 class Transaction(models.Model):
     TYPE_CHOICES = [
-        ('INCOME', 'Income'),
-        ('EXPENSE', 'Expense'),
+        ('INCOME', 'Доход'),
+        ('EXPENSE', 'Расход'),
     ]
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='transactions')
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True, related_name='transactions')

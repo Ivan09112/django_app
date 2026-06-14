@@ -69,13 +69,13 @@ function getCategoriesSummary() {
     rows.forEach(row => {
         const typeCell = row.cells[3].innerText.trim();
         // Нам нужны только Expenses (расходы) для диаграммы распределения трат
-        if (typeCell === 'Expense') {
+        if (typeCell === 'Расход') {
             const categoryBadge = row.querySelector('.category-badge');
             const catName = categoryBadge.innerText.trim();
             const color = categoryBadge.style.color; // берем HEX/RGB сохраненный
             
-            // Чистим сумму от знаков минус и баксов
-            const amountText = row.cells[4].innerText.replace('-$', '').replace('$', '').trim();
+            // Чистим сумму от знаков минус, валюты и прочего
+            const amountText = row.cells[4].innerText.replace(/[^\d.]/g, '').trim();
             const amount = parseFloat(amountText);
             
             if (summary[catName]) {
@@ -169,12 +169,12 @@ function setupFormSubmit() {
                 // Обновляем график
                 updateChart();
             } else {
-                alert('Error adding transaction: ' + data.message);
+                alert('Ошибка при добавлении транзакции: ' + data.message);
             }
         })
         .catch(err => {
             console.error('API Error:', err);
-            alert('Something went wrong. Please try again.');
+            alert('Что-то пошло не так. Пожалуйста, попробуйте еще раз.');
         });
     });
 }
@@ -195,7 +195,7 @@ function addTransactionToTable(tx) {
     const isIncome = tx.type === 'INCOME';
     const amountClass = isIncome ? 'amount-income' : 'amount-expense';
     const amountSign = isIncome ? '+' : '-';
-    const typeLabel = isIncome ? 'Income' : 'Expense';
+    const typeLabel = isIncome ? 'Доход' : 'Расход';
     
     tr.innerHTML = `
         <td>${tx.date}</td>
@@ -207,9 +207,9 @@ function addTransactionToTable(tx) {
             </span>
         </td>
         <td>${typeLabel}</td>
-        <td class="${amountClass}">${amountSign}$${parseFloat(tx.amount).toFixed(2)}</td>
+        <td class="${amountClass}">${amountSign}${parseFloat(tx.amount).toFixed(2)} ₽</td>
         <td>
-            <button class="btn-delete" onclick="deleteTransaction(${tx.id})" title="Delete transaction">
+            <button class="btn-delete" onclick="deleteTransaction(${tx.id})" title="Удалить транзакцию">
                 <i data-lucide="trash-2" style="width: 16px; height: 16px;"></i>
             </button>
         </td>
@@ -226,7 +226,7 @@ function addTransactionToTable(tx) {
 
 // Удаление транзакции
 window.deleteTransaction = function(txId) {
-    if (!confirm('Are you sure you want to delete this transaction?')) return;
+    if (!confirm('Вы уверены, что хотите удалить эту транзакцию?')) return;
     
     const csrfToken = getCookie('csrftoken');
     
@@ -249,7 +249,7 @@ window.deleteTransaction = function(txId) {
             if (body && body.querySelectorAll('tr').length === 0) {
                 body.innerHTML = `
                     <tr id="empty-row">
-                        <td colspan="6" class="empty-state">No transactions yet. Add your first transaction above!</td>
+                        <td colspan="6" class="empty-state">Транзакций пока нет. Добавьте свою первую транзакцию выше!</td>
                     </tr>
                 `;
             }
@@ -258,12 +258,12 @@ window.deleteTransaction = function(txId) {
             updateStats(data.stats);
             updateChart();
         } else {
-            alert('Error deleting transaction: ' + data.message);
+            alert('Ошибка при удалении транзакции: ' + data.message);
         }
     })
     .catch(err => {
         console.error('API Error:', err);
-        alert('Something went wrong.');
+        alert('Что-то пошло не так.');
     });
 };
 
@@ -273,7 +273,7 @@ function updateStats(stats) {
     const income = document.getElementById('total-income');
     const expense = document.getElementById('total-expense');
     
-    if (balance) balance.innerText = `$${parseFloat(stats.balance).toFixed(2)}`;
-    if (income) income.innerText = `$${parseFloat(stats.total_income).toFixed(2)}`;
-    if (expense) expense.innerText = `$${parseFloat(stats.total_expense).toFixed(2)}`;
+    if (balance) balance.innerText = `${parseFloat(stats.balance).toFixed(2)} ₽`;
+    if (income) income.innerText = `${parseFloat(stats.total_income).toFixed(2)} ₽`;
+    if (expense) expense.innerText = `${parseFloat(stats.total_expense).toFixed(2)} ₽`;
 }

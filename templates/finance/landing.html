@@ -1,12 +1,12 @@
 {% extends 'finance/base.html' %}
-{% block title %}GlassFinance - Modern Personal Finance Tracker{% endblock %}
+{% block title %}GlassFinance — Современный трекер личных финансов{% endblock %}
 {% block content %}
 <div class="landing-hero">
-    <h1>Take Control of Your Finances</h1>
-    <p>Track your daily income and expenses with our beautiful, real-time dark glassmorphic dashboard. Understand where your money goes instantly.</p>
+    <h1>Возьмите финансы под контроль</h1>
+    <p>Отслеживайте свои ежедневные доходы и расходы на интерактивной стеклянной панели в реальном времени. Узнайте, куда уходят ваши деньги.</p>
     <div class="landing-cta">
-        <a href="{% url 'finance:register' %}" class="btn btn-primary">Start Tracking Free</a>
-        <a href="{% url 'finance:login' %}" class="btn btn-outline">Sign In</a>
+        <a href="{% url 'finance:register' %}" class="btn btn-primary">Начать бесплатно</a>
+        <a href="{% url 'finance:login' %}" class="btn btn-outline">Войти</a>
     </div>
 </div>
 {% endblock %}

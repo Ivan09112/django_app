@@ -1,28 +1,28 @@
 {% extends 'finance/base.html' %}
-{% block title %}Dashboard - GlassFinance{% endblock %}
+{% block title %}Панель управления - GlassFinance{% endblock %}
 {% block content %}
 <div class="dashboard-grid">
     <!-- Stat 1: Balance -->
     <div class="glass-card stat-card">
-        <span class="stat-title">Current Balance</span>
-        <span class="stat-value" id="total-balance">${{ balance|floatformat:2 }}</span>
+        <span class="stat-title">Текущий баланс</span>
+        <span class="stat-value" id="total-balance">{{ balance|floatformat:2 }} ₽</span>
     </div>
 
     <!-- Stat 2: Income -->
     <div class="glass-card stat-card">
-        <span class="stat-title">Total Income</span>
-        <span class="stat-value value-income" id="total-income">${{ total_income|floatformat:2 }}</span>
+        <span class="stat-title">Общий доход</span>
+        <span class="stat-value value-income" id="total-income">{{ total_income|floatformat:2 }} ₽</span>
     </div>
 
     <!-- Stat 3: Expenses -->
     <div class="glass-card stat-card">
-        <span class="stat-title">Total Expenses</span>
-        <span class="stat-value value-expense" id="total-expense">${{ total_expense|floatformat:2 }}</span>
+        <span class="stat-title">Общие расходы</span>
+        <span class="stat-value value-expense" id="total-expense">{{ total_expense|floatformat:2 }} ₽</span>
     </div>
 
     <!-- Analytics Chart -->
     <div class="glass-card chart-card col-span-2">
-        <h3><i data-lucide="pie-chart"></i> Expenses by Category</h3>
+        <h3><i data-lucide="pie-chart"></i> Расходы по категориям</h3>
         <div style="position: relative; height: 250px; width: 100%;">
             <canvas id="expenseChart"></canvas>
         </div>
@@ -30,22 +30,22 @@
 
     <!-- Add Transaction Form -->
     <div class="glass-card form-card">
-        <h3><i data-lucide="plus-circle"></i> Add Transaction</h3>
+        <h3><i data-lucide="plus-circle"></i> Добавить транзакцию</h3>
         <form id="add-transaction-form">
             {% csrf_token %}
             <div class="form-group">
-                <label for="tx-amount">Amount ($)</label>
+                <label for="tx-amount">Сумма (₽)</label>
                 <input type="number" step="0.01" min="0.01" id="tx-amount" name="amount" required placeholder="0.00">
             </div>
             <div class="form-group">
-                <label for="tx-type">Type</label>
+                <label for="tx-type">Тип</label>
                 <select id="tx-type" name="type" required>
-                    <option value="EXPENSE">Expense</option>
-                    <option value="INCOME">Income</option>
+                    <option value="EXPENSE">Расход</option>
+                    <option value="INCOME">Доход</option>
                 </select>
             </div>
             <div class="form-group">
-                <label for="tx-category">Category</label>
+                <label for="tx-category">Категория</label>
                 <select id="tx-category" name="category" required>
                     {% for cat in categories %}
                         <option value="{{ cat.id }}" data-type="{{ cat.type }}">{{ cat.name }}</option>
@@ -53,30 +53,30 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="tx-date">Date</label>
+                <label for="tx-date">Дата</label>
                 <input type="date" id="tx-date" name="date" required value="{% now 'Y-m-d' %}">
             </div>
             <div class="form-group">
-                <label for="tx-desc">Description</label>
-                <input type="text" id="tx-desc" name="description" placeholder="Lunch, salary, etc.">
+                <label for="tx-desc">Описание</label>
+                <input type="text" id="tx-desc" name="description" placeholder="Обед, зарплата и т.д.">
             </div>
-            <button type="submit" class="btn btn-primary" style="width: 100%;">Add Transaction</button>
+            <button type="submit" class="btn btn-primary" style="width: 100%;">Добавить транзакцию</button>
         </form>
     </div>
 
     <!-- Transactions List -->
     <div class="glass-card list-card">
-        <h3><i data-lucide="list"></i> Recent Transactions</h3>
+        <h3><i data-lucide="list"></i> Последние транзакции</h3>
         <div class="transaction-table-wrapper">
             <table class="transaction-table">
                 <thead>
                     <tr>
-                        <th>Date</th>
-                        <th>Description</th>
-                        <th>Category</th>
-                        <th>Type</th>
-                        <th>Amount</th>
-                        <th>Actions</th>
+                        <th>Дата</th>
+                        <th>Описание</th>
+                        <th>Категория</th>
+                        <th>Тип</th>
+                        <th>Сумма</th>
+                        <th>Действия</th>
                     </tr>
                 </thead>
                 <tbody id="transaction-list-body">
@@ -92,17 +92,17 @@
                             </td>
                             <td>{{ tx.get_type_display }}</td>
                             <td class="{% if tx.type == 'INCOME' %}amount-income{% else %}amount-expense{% endif %}">
-                                {% if tx.type == 'INCOME' %}+{% else %}-{% endif %}${{ tx.amount }}
+                                {% if tx.type == 'INCOME' %}+{% else %}-{% endif %}{{ tx.amount }} ₽
                             </td>
                             <td>
-                                <button class="btn-delete" onclick="deleteTransaction({{ tx.id }})" title="Delete transaction">
+                                <button class="btn-delete" onclick="deleteTransaction({{ tx.id }})" title="Удалить транзакцию">
                                     <i data-lucide="trash-2" style="width: 16px; height: 16px;"></i>
                                 </button>
                             </td>
                         </tr>
                     {% empty %}
                         <tr id="empty-row">
-                            <td colspan="6" class="empty-state">No transactions yet. Add your first transaction above!</td>
+                            <td colspan="6" class="empty-state">Транзакций пока нет. Добавьте свою первую транзакцию выше!</td>
                         </tr>
                     {% endfor %}
                 </tbody>

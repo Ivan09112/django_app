@@ -12,7 +12,7 @@ class FinanceAPITestCase(TestCase):
         self.client.login(username='apiuser', password='password123')
         self.category = Category.objects.create(
             user=self.user,
-            name='Food',
+            name='Продукты',
             type='EXPENSE',
             icon='shopping-bag',
             color='#FF0000'
@@ -25,13 +25,13 @@ class FinanceAPITestCase(TestCase):
             'type': 'EXPENSE',
             'category': self.category.id,
             'date': '2026-06-14',
-            'description': 'Groceries'
+            'description': 'Продукты'
         })
         self.assertEqual(response.status_code, 201)
         data = response.json()
         self.assertEqual(data['status'], 'success')
         self.assertEqual(data['transaction']['amount'], '45.00')
-        self.assertTrue(Transaction.objects.filter(description='Groceries').exists())
+        self.assertTrue(Transaction.objects.filter(description='Продукты').exists())
 
     def test_delete_transaction_api(self):
         tx = Transaction.objects.create(
@@ -40,7 +40,7 @@ class FinanceAPITestCase(TestCase):
             amount=Decimal('20.00'),
             type='EXPENSE',
             date=datetime.date.today(),
-            description='Bus ticket'
+            description='Билет на автобус'
         )
         delete_url = reverse('finance:api_delete_transaction', args=[tx.id])
         response = self.client.post(delete_url)

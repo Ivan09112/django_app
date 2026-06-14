@@ -29,15 +29,15 @@
         </div>
         <div class="nav-links">
             {% if user.is_authenticated %}
-                <span class="nav-user">Welcome, <strong>{{ user.username }}</strong></span>
-                <a href="{% url 'finance:dashboard' %}" class="nav-link">Dashboard</a>
+                <span class="nav-user">Добро пожаловать, <strong>{{ user.username }}</strong></span>
+                <a href="{% url 'finance:dashboard' %}" class="nav-link">Дашборд</a>
                 <form action="{% url 'finance:logout' %}" method="post" style="display:inline;">
                     {% csrf_token %}
-                    <button type="submit" class="btn btn-outline btn-sm">Sign Out</button>
+                    <button type="submit" class="btn btn-outline btn-sm">Выйти</button>
                 </form>
             {% else %}
-                <a href="{% url 'finance:login' %}" class="nav-link">Sign In</a>
-                <a href="{% url 'finance:register' %}" class="btn btn-primary btn-sm">Get Started</a>
+                <a href="{% url 'finance:login' %}" class="nav-link">Войти</a>
+                <a href="{% url 'finance:register' %}" class="btn btn-primary btn-sm">Начать бесплатно</a>
             {% endif %}
         </div>
     </nav>
@@ -48,7 +48,7 @@
     </main>
 
     <footer class="glass-footer">
-        <p>&copy; 2026 GlassFinance. Built with Django & Glassmorphism.</p>
+        <p>&copy; 2026 GlassFinance. Сделано на Django с эффектом стекломорфизма.</p>
     </footer>
 
     <script>

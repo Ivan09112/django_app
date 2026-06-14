@@ -10,19 +10,19 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         # Дефолтные категории расходов
         expense_cats = [
-            {'name': 'Food & Dining', 'icon': 'shopping-bag', 'color': '#F43F5E'},
-            {'name': 'Transport', 'icon': 'car', 'color': '#3B82F6'},
-            {'name': 'Rent & Utilities', 'icon': 'home', 'color': '#F59E0B'},
-            {'name': 'Entertainment', 'icon': 'film', 'color': '#8B5CF6'},
-            {'name': 'Shopping', 'icon': 'gift', 'color': '#EC4899'},
-            {'name': 'Health', 'icon': 'heart', 'color': '#10B981'},
+            {'name': 'Продукты и кафе', 'icon': 'shopping-bag', 'color': '#F43F5E'},
+            {'name': 'Транспорт', 'icon': 'car', 'color': '#3B82F6'},
+            {'name': 'Жилье и комм. услуги', 'icon': 'home', 'color': '#F59E0B'},
+            {'name': 'Развлечения', 'icon': 'film', 'color': '#8B5CF6'},
+            {'name': 'Покупки', 'icon': 'gift', 'color': '#EC4899'},
+            {'name': 'Здоровье', 'icon': 'heart', 'color': '#10B981'},
         ]
         
         income_cats = [
-            {'name': 'Salary', 'icon': 'briefcase', 'color': '#10B981'},
-            {'name': 'Freelance', 'icon': 'globe', 'color': '#06B6D4'},
-            {'name': 'Investments', 'icon': 'trending-up', 'color': '#84CC16'},
-            {'name': 'Gifts/Other', 'icon': 'coins', 'color': '#EAB308'},
+            {'name': 'Зарплата', 'icon': 'briefcase', 'color': '#10B981'},
+            {'name': 'Фриланс', 'icon': 'globe', 'color': '#06B6D4'},
+            {'name': 'Инвестиции', 'icon': 'trending-up', 'color': '#84CC16'},
+            {'name': 'Подарки и прочее', 'icon': 'coins', 'color': '#EAB308'},
         ]
 
         # Создаем категории
@@ -67,20 +67,20 @@ class Command(BaseCommand):
         today = datetime.date.today()
         sample_txs = [
             # Доходы
-            {'amount': '5000.00', 'type': 'INCOME', 'category': 'Salary', 'date': today - datetime.timedelta(days=5), 'description': 'Monthly Salary'},
-            {'amount': '850.00', 'type': 'INCOME', 'category': 'Freelance', 'date': today - datetime.timedelta(days=2), 'description': 'Website Design Project'},
+            {'amount': '5000.00', 'type': 'INCOME', 'category': 'Зарплата', 'date': today - datetime.timedelta(days=5), 'description': 'Ежемесячная зарплата'},
+            {'amount': '850.00', 'type': 'INCOME', 'category': 'Фриланс', 'date': today - datetime.timedelta(days=2), 'description': 'Дизайн веб-сайта (проект)'},
             
             # Расходы
-            {'amount': '1200.00', 'type': 'EXPENSE', 'category': 'Rent & Utilities', 'date': today - datetime.timedelta(days=5), 'description': 'Apartment Rent'},
-            {'amount': '95.50', 'type': 'EXPENSE', 'category': 'Rent & Utilities', 'date': today - datetime.timedelta(days=4), 'description': 'Electricity Bill'},
-            {'amount': '154.20', 'type': 'EXPENSE', 'category': 'Food & Dining', 'date': today - datetime.timedelta(days=4), 'description': 'Weekly Groceries at Spar'},
-            {'amount': '45.00', 'type': 'EXPENSE', 'category': 'Transport', 'date': today - datetime.timedelta(days=3), 'description': 'Gas station'},
-            {'amount': '85.00', 'type': 'EXPENSE', 'category': 'Food & Dining', 'date': today - datetime.timedelta(days=2), 'description': 'Dinner with friends'},
-            {'amount': '120.00', 'type': 'EXPENSE', 'category': 'Shopping', 'date': today - datetime.timedelta(days=2), 'description': 'New Sneakers'},
-            {'amount': '30.00', 'type': 'EXPENSE', 'category': 'Entertainment', 'date': today - datetime.timedelta(days=1), 'description': 'Cinema tickets'},
-            {'amount': '15.00', 'type': 'EXPENSE', 'category': 'Entertainment', 'date': today, 'description': 'Netflix subscription'},
-            {'amount': '18.50', 'type': 'EXPENSE', 'category': 'Transport', 'date': today, 'description': 'Uber ride'},
-            {'amount': '60.00', 'type': 'EXPENSE', 'category': 'Health', 'date': today, 'description': 'Gym membership'},
+            {'amount': '1200.00', 'type': 'EXPENSE', 'category': 'Жилье и комм. услуги', 'date': today - datetime.timedelta(days=5), 'description': 'Аренда квартиры'},
+            {'amount': '95.50', 'type': 'EXPENSE', 'category': 'Жилье и комм. услуги', 'date': today - datetime.timedelta(days=4), 'description': 'Счет за электричество'},
+            {'amount': '154.20', 'type': 'EXPENSE', 'category': 'Продукты и кафе', 'date': today - datetime.timedelta(days=4), 'description': 'Еженедельные продукты в Spar'},
+            {'amount': '45.00', 'type': 'EXPENSE', 'category': 'Транспорт', 'date': today - datetime.timedelta(days=3), 'description': 'Заправка автомобиля'},
+            {'amount': '85.00', 'type': 'EXPENSE', 'category': 'Продукты и кафе', 'date': today - datetime.timedelta(days=2), 'description': 'Ужин с друзьями'},
+            {'amount': '120.00', 'type': 'EXPENSE', 'category': 'Покупки', 'date': today - datetime.timedelta(days=2), 'description': 'Новые кроссовки'},
+            {'amount': '30.00', 'type': 'EXPENSE', 'category': 'Развлечения', 'date': today - datetime.timedelta(days=1), 'description': 'Билеты в кино'},
+            {'amount': '15.00', 'type': 'EXPENSE', 'category': 'Развлечения', 'date': today, 'description': 'Подписка на Netflix'},
+            {'amount': '18.50', 'type': 'EXPENSE', 'category': 'Транспорт', 'date': today, 'description': 'Поездка на такси (Uber)'},
+            {'amount': '60.00', 'type': 'EXPENSE', 'category': 'Здоровье', 'date': today, 'description': 'Абонемент в спортзал'},
         ]
 
         for tx in sample_txs:

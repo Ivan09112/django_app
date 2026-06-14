@@ -33,7 +33,7 @@ class AuthenticationTestCase(TestCase):
             'password_confirm': 'newpassword123'
         })
         self.assertEqual(response.status_code, 200) # Возвращает форму с ошибкой
-        self.assertContains(response, 'Username already exists')
+        self.assertContains(response, 'Имя пользователя уже занято.')
 
     def test_registration_validation_passwords_mismatch(self):
         response = self.client.post(self.register_url, {
@@ -43,7 +43,7 @@ class AuthenticationTestCase(TestCase):
             'password_confirm': 'differentpassword'
         })
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, 'Passwords do not match')
+        self.assertContains(response, 'Пароли не совпадают.')
 
     def test_login_page_loads(self):
         response = self.client.get(self.login_url)

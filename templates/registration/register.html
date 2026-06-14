@@ -1,9 +1,9 @@
 {% extends 'finance/base.html' %}
-{% block title %}Create Account - GlassFinance{% endblock %}
+{% block title %}Регистрация — GlassFinance{% endblock %}
 {% block content %}
 <div class="auth-container">
     <div class="glass-card auth-card">
-        <h2>Register</h2>
+        <h2>Регистрация</h2>
         {% if errors %}
             {% for error in errors %}
                 <div class="error-msg">{{ error }}</div>
@@ -12,24 +12,24 @@
         <form method="post">
             {% csrf_token %}
             <div class="form-group">
-                <label for="id_username">Username</label>
-                <input type="text" name="username" id="id_username" required placeholder="Choose a username">
+                <label for="id_username">Имя пользователя</label>
+                <input type="text" name="username" id="id_username" required placeholder="Выберите имя пользователя">
             </div>
             <div class="form-group">
-                <label for="id_email">Email Address</label>
+                <label for="id_email">Электронная почта</label>
                 <input type="email" name="email" id="id_email" placeholder="you@example.com">
             </div>
             <div class="form-group">
-                <label for="id_password">Password</label>
-                <input type="password" name="password" id="id_password" required placeholder="Create password">
+                <label for="id_password">Пароль</label>
+                <input type="password" name="password" id="id_password" required placeholder="Создайте пароль">
             </div>
             <div class="form-group">
-                <label for="id_password_confirm">Confirm Password</label>
-                <input type="password" name="password_confirm" id="id_password_confirm" required placeholder="Repeat password">
+                <label for="id_password_confirm">Подтверждение пароля</label>
+                <input type="password" name="password_confirm" id="id_password_confirm" required placeholder="Повторите пароль">
             </div>
-            <button type="submit" class="btn btn-primary">Create Account</button>
+            <button type="submit" class="btn btn-primary">Создать аккаунт</button>
         </form>
-        <p class="auth-footer">Already have an account? <a href="{% url 'finance:login' %}">Sign In here</a></p>
+        <p class="auth-footer">Уже есть аккаунт? <a href="{% url 'finance:login' %}">Войти здесь</a></p>
     </div>
 </div>
 {% endblock %}

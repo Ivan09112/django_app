@@ -57,11 +57,11 @@ def register_view(request):
         password_confirm = request.POST.get('password_confirm', '')
 
         if not username or not password or not password_confirm:
-            errors.append("Please fill in all required fields.")
+            errors.append("Пожалуйста, заполните все обязательные поля.")
         elif password != password_confirm:
-            errors.append("Passwords do not match.")
+            errors.append("Пароли не совпадают.")
         elif User.objects.filter(username=username).exists():
-            errors.append("Username already exists.")
+            errors.append("Имя пользователя уже занято.")
         
         if not errors:
             user = User.objects.create_user(username=username, email=email, password=password)
@@ -80,13 +80,13 @@ def api_add_transaction(request):
     description = request.POST.get('description', '').strip()
 
     if not amount_str or not tx_type or not category_id or not date_str:
-        return JsonResponse({'status': 'error', 'message': 'Missing fields'}, status=400)
+        return JsonResponse({'status': 'error', 'message': 'Заполните все поля'}, status=400)
 
     try:
         amount = Decimal(amount_str)
         category = Category.objects.get(id=category_id)
         if category.user and category.user != request.user:
-            return JsonResponse({'status': 'error', 'message': 'Invalid category'}, status=403)
+            return JsonResponse({'status': 'error', 'message': 'Неверная категория'}, status=403)
             
         date = datetime.datetime.strptime(date_str, '%Y-%m-%d').date()
         
@@ -148,7 +148,7 @@ def api_delete_transaction(request, tx_id):
             }
         }, status=200)
     except Transaction.DoesNotExist:
-        return JsonResponse({'status': 'error', 'message': 'Transaction not found'}, status=404)
+        return JsonResponse({'status': 'error', 'message': 'Транзакция не найдена'}, status=404)
     except Exception as e:
         return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
 
