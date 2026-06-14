@@ -1,0 +1,35 @@
+{% extends 'finance/base.html' %}
+{% block title %}Create Account - GlassFinance{% endblock %}
+{% block content %}
+<div class="auth-container">
+    <div class="glass-card auth-card">
+        <h2>Register</h2>
+        {% if errors %}
+            {% for error in errors %}
+                <div class="error-msg">{{ error }}</div>
+            {% endfor %}
+        {% endif %}
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id_username">Username</label>
+                <input type="text" name="username" id="id_username" required placeholder="Choose a username">
+            </div>
+            <div class="form-group">
+                <label for="id_email">Email Address</label>
+                <input type="email" name="email" id="id_email" placeholder="you@example.com">
+            </div>
+            <div class="form-group">
+                <label for="id_password">Password</label>
+                <input type="password" name="password" id="id_password" required placeholder="Create password">
+            </div>
+            <div class="form-group">
+                <label for="id_password_confirm">Confirm Password</label>
+                <input type="password" name="password_confirm" id="id_password_confirm" required placeholder="Repeat password">
+            </div>
+            <button type="submit" class="btn btn-primary">Create Account</button>
+        </form>
+        <p class="auth-footer">Already have an account? <a href="{% url 'finance:login' %}">Sign In here</a></p>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,15 @@
+# Python / Django
+.venv/
+__pycache__/
+*.pyc
+db.sqlite3
+.DS_Store
+
+# Игнорировать папки, указанные пользователем
+.agents/
+docs/
+
+# Игнорировать все .md файлы кроме README.md
+*.md
+**/*.md
+!README.md

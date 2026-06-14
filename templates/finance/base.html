@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}GlassFinance{% endblock %}</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'finance/css/style.css' %}">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <!-- Aurora background glow blobs -->
+    <div class="aurora-container">
+        <div class="blob blob-purple"></div>
+        <div class="blob blob-teal"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="glass-nav">
+        <div class="nav-brand">
+            <i data-lucide="wallet" class="brand-icon"></i>
+            <span>GlassFinance</span>
+        </div>
+        <div class="nav-links">
+            {% if user.is_authenticated %}
+                <span class="nav-user">Welcome, <strong>{{ user.username }}</strong></span>
+                <a href="{% url 'finance:dashboard' %}" class="nav-link">Dashboard</a>
+                <form action="{% url 'finance:logout' %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline btn-sm">Sign Out</button>
+                </form>
+            {% else %}
+                <a href="{% url 'finance:login' %}" class="nav-link">Sign In</a>
+                <a href="{% url 'finance:register' %}" class="btn btn-primary btn-sm">Get Started</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-wrapper">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="glass-footer">
+        <p>&copy; 2026 GlassFinance. Built with Django & Glassmorphism.</p>
+    </footer>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+    </script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>
