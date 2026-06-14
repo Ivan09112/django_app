@@ -56,3 +56,12 @@ class AuthenticationTestCase(TestCase):
             'password': 'password123'
         })
         self.assertEqual(response.status_code, 302)
+
+    def test_dashboard_page_loads_for_authenticated_user(self):
+        self.client.login(username='existinguser', password='password123')
+        # Создадим категорию, чтобы избежать ошибок при рендеринге пустого списка
+        from finance.models import Category
+        Category.objects.create(user=self.user, name='Тест', type='EXPENSE')
+        response = self.client.get(reverse('finance:dashboard'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'finance/dashboard.html')
